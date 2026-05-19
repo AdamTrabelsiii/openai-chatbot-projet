@@ -24,16 +24,10 @@
   <div class="main">
 
     <div class="header">
-      <h3>AI Chat</h3>
+      <h3><h3>ChatBot Revision Info</h3></h3>
     </div>
 
     <div class="chatbox"></div>
-
-    <div class="suggestbuttons">
-      <button>💡 Explain AI</button>
-      <button>😂 Tell joke</button>
-      <button>📚 Help me study</button>
-    </div>
 
     <div class="msgarea">
       <textarea placeholder="Type your message..."></textarea>
@@ -50,7 +44,6 @@ const chatList = document.querySelector(".chat-list");
 const chatbox = document.querySelector(".chatbox");
 const msgarea = document.querySelector("textarea");
 const msgbutton = document.querySelector(".msgarea button");
-const suggestbuttons = document.querySelectorAll(".suggestbuttons button");
 
 let chats = JSON.parse(localStorage.getItem("chats")) || {};
 let currentChatId = null;
@@ -163,11 +156,6 @@ async function handleUserMessage(text) {
 msgbutton.onclick = function () {
   handleUserMessage(msgarea.value);
 };
-
-/* SUGGEST BUTTONS */
-suggestbuttons[0].onclick = () => handleUserMessage("💡 Explain AI");
-suggestbuttons[1].onclick = () => handleUserMessage("😂 Tell joke");
-suggestbuttons[2].onclick = () => handleUserMessage("📚 Help me study");
 
 /* NEW CHAT */
 newchat.onclick = createChat;
