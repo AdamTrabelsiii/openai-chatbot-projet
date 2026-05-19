@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-flask
-openai
-python-dotenv
-=======
 Flask>=2.3
 Flask-Cors>=3.0
 python-dotenv>=1.0
 requests>=2.31
 openai>=1.0
->>>>>>> faf958d233bcac3f01f4d38bdca33e69f9e90383
+>>>>>>
