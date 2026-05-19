@@ -1,3 +1,160 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
 body {
-  font-family: Arial;
+  height: 100vh;
+  background: linear-gradient(135deg, #ecfdf5, #f0fdfa);
+  color: #064e3b;
+}
+
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+
+.sidebar {
+  width: 250px;
+  background: rgba(16, 185, 129, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.sidebar h2 {
+  margin-bottom: 15px;
+  color: #065f46;
+}
+
+
+.newchat {
+  padding: 10px;
+  background: #10b981;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.newchat:hover {
+  background: #059669;
+}
+
+
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chat-item {
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  cursor: pointer;
+  color: #065f46;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.chat-item:hover {
+  background: rgba(16, 185, 129, 0.15);
+}
+
+.chat-item .delete {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+}
+
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.header {
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  color: #064e3b;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+
+.chatbox {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+.message {
+  padding: 10px 14px;
+  border-radius: 14px;
+  max-width: 60%;
+  word-wrap: break-word;
+}
+
+
+.user {
+  background: #10b981;
+  color: white;
+  margin-left: auto;
+}
+
+
+.bot {
+  background: rgba(255, 255, 255, 0.7);
+  color: #064e3b;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+
+.msgarea {
+  display: flex;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.msgarea textarea {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 10px;
+  resize: none;
+  background: white;
+  color: #064e3b;
+}
+
+.msgarea button {
+  margin-left: 10px;
+  padding: 10px 15px;
+  background: #10b981;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.msgarea button:hover {
+  background: #059669;
 }
