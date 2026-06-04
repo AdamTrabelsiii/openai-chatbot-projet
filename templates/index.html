@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Chatbot UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="sidebar">
+    <h2>Chats</h2>
+
+    <button class="newchat">+ New Chat</button>
+
+    <div class="chat-list"></div>
+  </div>
+
+  <div class="main">
+
+    <div class="header">
+      <h3><h3>ChatBot Revision Info</h3></h3>
+    </div>
+
+    <div class="chatbox"></div>
+
+    <div class="msgarea">
+      <textarea placeholder="Type your message..."></textarea>
+      <button>Send</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+const newchat = document.querySelector(".newchat");
+const chatList = document.querySelector(".chat-list");
+const chatbox = document.querySelector(".chatbox");
+const msgarea = document.querySelector("textarea");
+const msgbutton = document.querySelector(".msgarea button");
+
+let chats = JSON.parse(localStorage.getItem("chats")) || {};
+let currentChatId = null;
+
+function save() {
+  localStorage.setItem("chats", JSON.stringify(chats));
+}
+
+function createChat() {
+  const id = "chat_" + Date.now();
+  const count = Object.keys(chats).length + 1;
+
+  chats[id] = {
+    name: "Chat " + count,
+    messages: []
+  };
+
+  save();
+  renderChats();
+  openChat(id);
+}
+
+function renderChats() {
+  chatList.innerHTML = "";
+
+  Object.entries(chats).forEach(([id, chat]) => {
+    const div = document.createElement("div");
+    div.className = "chat-item";
+
+    div.innerHTML = `
+      <span>${chat.name}</span>
+      <button class="delete">✖</button>
+    `;
+
+    div.querySelector("span").onclick = () => openChat(id);
+
+    div.querySelector(".delete").onclick = (e) => {
+      e.stopPropagation();
+      delete chats[id];
+      save();
+      renderChats();
+
+      if (currentChatId === id) {
+        currentChatId = null;
+        chatbox.innerHTML = "";
+      }
+    };
+
+    chatList.appendChild(div);
+  });
+}
+
+function openChat(id) {
+  currentChatId = id;
+  chatbox.innerHTML = "";
+
+  chats[id].messages.forEach(m => {
+    const div = document.createElement("div");
+    div.className = "message " + m.role;
+    div.innerText = m.text;
+    chatbox.appendChild(div);
+  });
+}
+
+function addMessage(text, role) {
+  if (!currentChatId || !chats[currentChatId]) {
+    createChat();
+  }
+
+  const msg = { text, role };
+  chats[currentChatId].messages.push(msg);
+  save();
+
+  const div = document.createElement("div");
+  div.className = "message " + role;
+  div.innerText = text;
+  chatbox.appendChild(div);
+}
+
+async function botRequest(text) {
+  const res = await fetch("/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: text })
+  });
+
+  const data = await res.json();
+  addMessage(data.reply, "bot");
+}
+
+async function handleUserMessage(text) {
+  if (!text) return;
+
+  if (!currentChatId) createChat();
+
+  addMessage(text, "user");
+  msgarea.value = "";
+
+  await botRequest(text);
+}
+
+msgbutton.onclick = function () {
+  handleUserMessage(msgarea.value);
+};
+
+newchat.onclick = createChat;
+
+renderChats();
+
+</script>
+
+</body>
+</html>
